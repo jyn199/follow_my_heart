@@ -1,0 +1,94 @@
+<html>
+    <head>
+        <!-- MS Word on Windows doesn't realise the encoding is UTF-8 unless this meta tag is present -->
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <base href="http://wiki.corp.qunar.com" />
+        <title>RabbitMq配置</title>
+        <style>
+            body, p, td, table, tr, .bodytext, .stepfield {
+	            font-family: Verdana, arial, sans-serif;
+            }
+            .panel {
+                margin: 10px;
+                padding: 10px;
+                border: 1px solid #999;
+                background-color: #f0f0f0;
+            }
+            .noteMacro { border-style: solid; border-width: 1px; border-color: #F0C000; background-color: #FFFFCE; text-align:left;}
+            .warningMacro { border-style: solid; border-width: 1px; border-color: #c00; background-color: #fcc; text-align:left;}
+            .infoMacro { border-style: solid; border-width: 1px; border-color: #69c; background-color: #D8E4F1; text-align:left;}
+            .tipMacro { border-style: solid; border-width: 1px; border-color: #090; background-color: #dfd; text-align:left;}
+            .informationMacroPadding { padding: 5px 0 0 5px; }
+
+            table.infoMacro td, table.warningMacro td, table.tipMacro td, table.noteMacro td, table.sectionMacro td {
+                border: none;
+            }
+
+            .grid {
+                margin: 2px 0px 5px 0px;
+                border-collapse: collapse;
+            }
+            .grid th  {
+                border: 1px solid #ccc;
+                padding: 2px 4px 2px 4px;
+                background: #f0f0f0;
+                text-align: center;
+            }
+            .grid td  {
+                border: 1px solid #ccc;
+                padding: 3px 4px 3px 4px;
+            }            
+        </style>
+    </head>
+
+    <body style="background-color: white; padding: 10px;">
+        <h1>RabbitMq配置</h1>
+        <div>
+<ul>
+    <li><a href='#RabbitMq%E9%85%8D%E7%BD%AE-virtualhost%E9%85%8D%E7%BD%AE'>virtual host配置</a></li>
+    <li><a href='#RabbitMq%E9%85%8D%E7%BD%AE-%E7%94%A8%E6%88%B7%E9%85%8D%E7%BD%AE'>用户配置</a></li>
+    <li><a href='#RabbitMq%E9%85%8D%E7%BD%AE-exchange%E9%85%8D%E7%BD%AE'>exchange配置</a></li>
+    <li><a href='#RabbitMq%E9%85%8D%E7%BD%AE-queues%E9%85%8D%E7%BD%AE'>queues配置</a></li>
+</ul></div>
+
+<h3><a name="RabbitMq%E9%85%8D%E7%BD%AE-virtualhost%E9%85%8D%E7%BD%AE"></a>virtual host配置</h3>
+<hr />
+<p>新增Vhost：isapi</p>
+
+<h3><a name="RabbitMq%E9%85%8D%E7%BD%AE-%E7%94%A8%E6%88%B7%E9%85%8D%E7%BD%AE"></a>用户配置</h3>
+<hr />
+<p>新增用户，isdev，权限为isapi</p>
+
+<h3><a name="RabbitMq%E9%85%8D%E7%BD%AE-exchange%E9%85%8D%E7%BD%AE"></a>exchange配置</h3>
+<hr />
+<ol>
+	<li>入职中新增：<br/>
+新增isapi.offerhir，fanout类型</li>
+	<li>未报到新增：<br/>
+新增isapi.unregister，fanout类型</li>
+	<li>离职数据：<br/>
+新增isapi.dimission，fanout类型</li>
+	<li>删除离职状态数据：<br/>
+新增isapi.revoke，fanout类型</li>
+	<li>离职和删除离职状态数据：<br/>
+新增isapi.revoke.dim，fanout类型</li>
+</ol>
+
+
+<h3><a name="RabbitMq%E9%85%8D%E7%BD%AE-queues%E9%85%8D%E7%BD%AE"></a>queues配置</h3>
+<hr />
+<ol>
+	<li>入职中订阅新增（测试）：<br/>
+新增<font color="#ff0000">isapi.offerhir.test绑定isapi.offerhir</font></li>
+	<li>未报到订阅新增（测试）：<br/>
+新增<font color="#ff0000">isapi.unregister.test绑定isapi.unregister</font></li>
+	<li>离职数据订阅新增（测试）：<br/>
+新增<font color="#ff0000">isapi.dimission.test绑定isapi.dimission</font></li>
+	<li>删除离职状态数据订阅新增（测试）：<br/>
+新增<font color="#ff0000">isapi.revoke.test绑定isapi.revoke</font></li>
+	<li>离职和删除离职状态数据订阅新增（测试）：<br/>
+新增<font color="#ff0000">isapi.revoke.dim.test绑定isapi.revoke.dim</font></li>
+</ol>
+
+    </body>
+</html>
