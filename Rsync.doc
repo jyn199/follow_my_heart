@@ -1,0 +1,225 @@
+<html>
+    <head>
+        <!-- MS Word on Windows doesn't realise the encoding is UTF-8 unless this meta tag is present -->
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <base href="http://wiki.corp.qunar.com" />
+        <title>Rsync</title>
+        <style>
+            body, p, td, table, tr, .bodytext, .stepfield {
+	            font-family: Verdana, arial, sans-serif;
+            }
+            .panel {
+                margin: 10px;
+                padding: 10px;
+                border: 1px solid #999;
+                background-color: #f0f0f0;
+            }
+            .noteMacro { border-style: solid; border-width: 1px; border-color: #F0C000; background-color: #FFFFCE; text-align:left;}
+            .warningMacro { border-style: solid; border-width: 1px; border-color: #c00; background-color: #fcc; text-align:left;}
+            .infoMacro { border-style: solid; border-width: 1px; border-color: #69c; background-color: #D8E4F1; text-align:left;}
+            .tipMacro { border-style: solid; border-width: 1px; border-color: #090; background-color: #dfd; text-align:left;}
+            .informationMacroPadding { padding: 5px 0 0 5px; }
+
+            table.infoMacro td, table.warningMacro td, table.tipMacro td, table.noteMacro td, table.sectionMacro td {
+                border: none;
+            }
+
+            .grid {
+                margin: 2px 0px 5px 0px;
+                border-collapse: collapse;
+            }
+            .grid th  {
+                border: 1px solid #ccc;
+                padding: 2px 4px 2px 4px;
+                background: #f0f0f0;
+                text-align: center;
+            }
+            .grid td  {
+                border: 1px solid #ccc;
+                padding: 3px 4px 3px 4px;
+            }            
+        </style>
+    </head>
+
+    <body style="background-color: white; padding: 10px;">
+        <h1>Rsync</h1>
+        <div>
+<ul>
+    <li><a href='#Rsync-%E6%9C%8D%E5%8A%A1%E7%AB%AF'>服务端</a></li>
+<ul>
+    <li><a href='#Rsync-%E5%AE%89%E8%A3%85'>安装</a></li>
+    <li><a href='#Rsync-%E5%BC%80%E5%90%AF%E6%9C%89%E6%95%88%E6%A8%A1%E5%BC%8F'>开启有效模式</a></li>
+    <li><a href='#Rsync-%E5%A2%9E%E5%8A%A0%E5%AF%86%E7%A0%81%E6%96%87%E4%BB%B6%28%E5%BF%85%E9%A1%BB600%29'>增加密码文件(必须600)</a></li>
+    <li><a href='#Rsync-%E5%A2%9E%E5%8A%A0%E5%90%AF%E5%8A%A8%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6'>增加启动配置文件</a></li>
+    <li><a href='#Rsync-%E5%90%AF%E5%8A%A8rsync'>启动rsync</a></li>
+</ul>
+    <li><a href='#Rsync-%E5%AE%A2%E6%88%B7%E7%AB%AF'>客户端</a></li>
+<ul>
+    <li><a href='#Rsync-%E5%A2%9E%E5%8A%A0%E5%AF%86%E7%A0%81%E6%96%87%E4%BB%B6%EF%BC%88%E5%BF%85%E9%A1%BB600%EF%BC%89'>增加密码文件（ 必须600）</a></li>
+    <li><a href='#Rsync-%E6%89%A7%E8%A1%8C%E5%90%8C%E6%AD%A5%28%E4%B8%8D%E8%A6%81%E5%8A%A0%E5%88%A0%E9%99%A4%EF%BC%8C%E9%99%A4%E9%9D%9E%E4%BD%A0%E7%A1%AE%E5%AE%9A%EF%BC%9Adelete%29'>执行同步(不要加删除， 除非你确定：--delete)</a></li>
+</ul>
+    <li><a href='#Rsync-sersync2'>sersync2</a></li>
+<ul>
+    <li><a href='#Rsync-%E5%A2%9E%E5%8A%A0%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6'>增加配置文件</a></li>
+    <li><a href='#Rsync-%E4%B8%8B%E8%BD%BDsersync2%E6%96%87%E4%BB%B6%EF%BC%88%E9%99%84%E4%BB%B6%E4%B8%AD%EF%BC%89'>下载sersync2文件（ 附件中）</a></li>
+</ul>
+    <li><a href='#Rsync-%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98'>遇到的问题</a></li>
+</ul></div>
+
+<h3><a name="Rsync-%E6%9C%8D%E5%8A%A1%E7%AB%AF"></a>服务端</h3>
+<hr />
+<h4><a name="Rsync-%E5%AE%89%E8%A3%85"></a>安装</h4>
+<hr />
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+yum -y install rsync
+</pre>
+</div></div>
+
+<h4><a name="Rsync-%E5%BC%80%E5%90%AF%E6%9C%89%E6%95%88%E6%A8%A1%E5%BC%8F"></a>开启有效模式</h4>
+<hr />
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+vim /etc/xinetd.d/rsync
+把其中的disable	= yes改为disable = no
+</pre>
+</div></div>
+
+<h4><a name="Rsync-%E5%A2%9E%E5%8A%A0%E5%AF%86%E7%A0%81%E6%96%87%E4%BB%B6%28%E5%BF%85%E9%A1%BB600%29"></a>增加密码文件(必须600)</h4>
+<hr />
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+/home/q/rsync_s.pas(路径随便，但是后续需要在配置文件中指定)
+内容：
+root:**\*
+chmod 600 /home/q/rsync_s.pas
+</pre>
+</div></div>
+
+<h4><a name="Rsync-%E5%A2%9E%E5%8A%A0%E5%90%AF%E5%8A%A8%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"></a>增加启动配置文件</h4>
+<hr />
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+/etc/rsyncd.conf
+内容：
+
+list = <span class="code-keyword">false</span>
+uid = root
+gid = root
+log file = /<span class="code-keyword">var</span>/log/sync_sersync.log
+transfer logging = yes
+use chroot = no
+address = 10.86.45.252
+
+[TEST_DATA]
+comment = OPS TEST DATA
+path = /home/yongnian.jiang/test/
+ignore errors = yes
+read only = no
+hosts allow = 10.86.46.16/32
+auth users = root
+secrets file = /home/q/rsync_s.pas
+</pre>
+</div></div>
+
+<h4><a name="Rsync-%E5%90%AF%E5%8A%A8rsync"></a>启动rsync</h4>
+<hr />
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+/usr/bin/rsync --daemon --config=/etc/rsyncd.conf
+</pre>
+</div></div>
+
+<h3><a name="Rsync-%E5%AE%A2%E6%88%B7%E7%AB%AF"></a>客户端</h3>
+<hr />
+<h4><a name="Rsync-%E5%A2%9E%E5%8A%A0%E5%AF%86%E7%A0%81%E6%96%87%E4%BB%B6%EF%BC%88%E5%BF%85%E9%A1%BB600%EF%BC%89"></a>增加密码文件（必须600）</h4>
+<hr />
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+/home/q/rsync_c.pas
+内容：
+\***（服务端的密码去除前面的鉴权用户：root:）
+chmod 600 /home/q/rsync_c.pas
+</pre>
+</div></div>
+
+<h4><a name="Rsync-%E6%89%A7%E8%A1%8C%E5%90%8C%E6%AD%A5%28%E4%B8%8D%E8%A6%81%E5%8A%A0%E5%88%A0%E9%99%A4%EF%BC%8C%E9%99%A4%E9%9D%9E%E4%BD%A0%E7%A1%AE%E5%AE%9A%EF%BC%9Adelete%29"></a>执行同步(不要加删除，除非你确定：--delete)</h4>
+<hr />
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+rsync -artuz --progress root@10.86.45.252::TEST_DATA /home/yongnian.jiang/test --password-file=/home/q/rsync_c.pas
+</pre>
+</div></div>
+
+<h3><a name="Rsync-sersync2"></a>sersync2</h3>
+<hr />
+<h4><a name="Rsync-%E5%A2%9E%E5%8A%A0%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"></a>增加配置文件</h4>
+<hr />
+<p>增加配置文件confxml.xml</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+&lt;?xml version=<span class="code-quote">"1.0"</span> encoding=<span class="code-quote">"ISO-8859-1"</span>?&gt;
+&lt;head version=<span class="code-quote">"2.5"</span>&gt;
+    &lt;host hostip=<span class="code-quote">"localhost"</span> port=<span class="code-quote">"8008"</span>&gt;&lt;/host&gt;
+    &lt;debug start=<span class="code-quote">"<span class="code-keyword">false</span>"</span>/&gt;
+    &lt;fileSystem xfs=<span class="code-quote">"<span class="code-keyword">false</span>"</span>/&gt;
+    &lt;filter start=<span class="code-quote">"<span class="code-keyword">false</span>"</span>&gt;
+	&lt;exclude expression=<span class="code-quote">"(.*)\.svn"</span>&gt;&lt;/exclude&gt;
+	&lt;exclude expression=<span class="code-quote">"(.*)\.gz"</span>&gt;&lt;/exclude&gt;
+	&lt;exclude expression=<span class="code-quote">"^info/*"</span>&gt;&lt;/exclude&gt;
+	&lt;exclude expression=<span class="code-quote">"^<span class="code-keyword">static</span>/*"</span>&gt;&lt;/exclude&gt;
+    &lt;/filter&gt;
+    &lt;inotify&gt;
+	&lt;delete start=<span class="code-quote">"<span class="code-keyword">false</span>"</span>/&gt;
+	&lt;createFolder start=<span class="code-quote">"<span class="code-keyword">true</span>"</span>/&gt;
+	&lt;createFile start=<span class="code-quote">"<span class="code-keyword">false</span>"</span>/&gt;
+	&lt;closeWrite start=<span class="code-quote">"<span class="code-keyword">true</span>"</span>/&gt;
+	&lt;moveFrom start=<span class="code-quote">"<span class="code-keyword">true</span>"</span>/&gt;
+	&lt;moveTo start=<span class="code-quote">"<span class="code-keyword">true</span>"</span>/&gt;
+	&lt;attrib start=<span class="code-quote">"<span class="code-keyword">false</span>"</span>/&gt;
+	&lt;modify start=<span class="code-quote">"<span class="code-keyword">false</span>"</span>/&gt;
+    &lt;/inotify&gt;
+
+    &lt;sersync&gt;
+	&lt;localpath watch=<span class="code-quote">"/home/yongnian.jiang/test"</span>&gt;
+	    &lt;remote ip=<span class="code-quote">"10.86.46.16"</span> name=<span class="code-quote">"TEST_DATA"</span>/&gt;
+	&lt;/localpath&gt;
+	&lt;rsync&gt;
+	    &lt;commonParams params=<span class="code-quote">"-artuz"</span>/&gt;
+	    &lt;auth start=<span class="code-quote">"<span class="code-keyword">true</span>"</span> users=<span class="code-quote">"root"</span> passwordfile=<span class="code-quote">"/home/q/rsync_c.pas"</span>/&gt;
+	    &lt;userDefinedPort start=<span class="code-quote">"<span class="code-keyword">false</span>"</span> port=<span class="code-quote">"874"</span>/&gt;&lt;!-- port=874 --&gt;
+	    &lt;timeout start=<span class="code-quote">"<span class="code-keyword">false</span>"</span> time=<span class="code-quote">"100"</span>/&gt;&lt;!-- timeout=100 --&gt;
+	    &lt;ssh start=<span class="code-quote">"<span class="code-keyword">false</span>"</span>/&gt;
+	&lt;/rsync&gt;
+	&lt;failLog path=<span class="code-quote">"/tmp/rsync_fail_log.sh"</span> timeToExecute=<span class="code-quote">"60"</span>/&gt;&lt;!--<span class="code-keyword">default</span> every 60mins execute once--&gt;
+	&lt;crontab start=<span class="code-quote">"<span class="code-keyword">false</span>"</span> schedule=<span class="code-quote">"600"</span>&gt;&lt;!--600mins--&gt;
+	    &lt;crontabfilter start=<span class="code-quote">"<span class="code-keyword">false</span>"</span>&gt;
+		&lt;exclude expression=<span class="code-quote">"*.php"</span>&gt;&lt;/exclude&gt;
+		&lt;exclude expression=<span class="code-quote">"info/*"</span>&gt;&lt;/exclude&gt;
+	    &lt;/crontabfilter&gt;
+	&lt;/crontab&gt;
+	&lt;plugin start=<span class="code-quote">"<span class="code-keyword">false</span>"</span> name=<span class="code-quote">"command"</span>/&gt;
+    &lt;/sersync&gt;
+
+&lt;/head&gt;
+</pre>
+</div></div>
+
+<h4><a name="Rsync-%E4%B8%8B%E8%BD%BDsersync2%E6%96%87%E4%BB%B6%EF%BC%88%E9%99%84%E4%BB%B6%E4%B8%AD%EF%BC%89"></a>下载sersync2文件（附件中）</h4>
+<hr />
+<p>启动</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+sersync2 -d -o confxml.xml
+</pre>
+</div></div>
+
+<h3><a name="Rsync-%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"></a>遇到的问题</h3>
+<hr />
+<ol>
+	<li>unable to bind any inbound sockets on port 873<br/>
+端口被占用了，也可能你配置文件中写的IP地址错了，记得改成本机IP</li>
+</ol>
+
+    </body>
+</html>
