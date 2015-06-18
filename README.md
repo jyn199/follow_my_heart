@@ -7,5 +7,7 @@
 3、rsync:<br/>
 文件：Rsync.doc，sersync2.zip<br/>
 4、rabbitmq配置:<br/>
-文件：RabbitMq配置<br/>
+文件：RabbitMq配置.doc<br/>
+5、jrebel+jetty+eclipse配置:<br/>
+文件：jrebel+jetty+eclipse.doc<br/>
 
